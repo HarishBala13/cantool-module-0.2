@@ -1,0 +1,15 @@
+<!-- <div id="logContainer"></div>
+<button id="clearButton" (click)="clearLogs()">Clear Window</button> -->
+
+<div class="logs-container">
+    <h2>Communication Logs</h2>
+    {{logs}}
+    <div class="log-list" id="logContainer">
+        @for(log of logs; track $index){
+        <div class="log-entry">
+            {{log}}
+        </div>
+        }
+    </div>
+    <button class="clear-button" (click)="clearLogs()">Clear Logs</button>
+</div>

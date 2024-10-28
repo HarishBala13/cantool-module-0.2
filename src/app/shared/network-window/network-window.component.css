@@ -1,0 +1,41 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+    /* Full viewport height */
+    flex-direction: column;
+    /* Stack children vertically */
+}
+
+.sidebar {
+    width: 200px;
+    /* Fixed width for sidebar */
+    background-color: #f4f4f4;
+    /* Sidebar background color */
+    height: calc(100vh - 60px);
+    /* Full height minus footer height */
+    position: fixed;
+    /* Fixes sidebar in place */
+}
+
+.main-content {
+    margin-left: 200px;
+    /* Space for sidebar */
+    flex-grow: 1;
+    /* Take up remaining space */
+    padding: 20px;
+    /* Content padding */
+    overflow-y: auto;
+    /* Scroll if needed */
+}

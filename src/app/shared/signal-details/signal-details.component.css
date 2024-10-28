@@ -1,0 +1,23 @@
+.signal-details-container {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.signal-details-container h2 {
+    margin-bottom: 15px;
+}
+
+.signal-details-container p {
+    margin: 10px 0;
+}
+
+.signal-details-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.signal-details-container li {
+    margin: 5px 0;
+}

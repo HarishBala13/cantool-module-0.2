@@ -1,0 +1,22 @@
+<div class="signal-details-container">
+    <h2>Signal Details</h2>
+    <div *ngIf="signalID; else noSignal">
+      <p><strong>Selected Signal ID:</strong> {{ signalID }}</p>
+      <p><strong>Details about {{ signalID }}:</strong></p>
+      <ul>
+        <li><strong>Description:</strong> This is a description for {{ signalID }}.</li>
+        <li><strong>Status:</strong> Active</li>
+        <li><strong>Last Updated:</strong> {{ currentDate | date:'short' }}</li>
+        <!-- Add more details as needed -->
+      </ul>
+    </div>
+    <ng-template #noSignal>
+      <p>No signal selected. Please select a signal from the sidebar.</p>
+    </ng-template>
+  </div>
+  
+
+<!-- <div *ngIf="signal">
+    <h2>Selected Signal: {{ signal }}</h2>
+    <p>Details about {{ signal }}...</p>
+</div> -->

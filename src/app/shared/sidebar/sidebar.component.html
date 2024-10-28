@@ -1,0 +1,68 @@
+<div class="sidebar">
+    <h3 (click)="toggleNetwork()">Network</h3>
+    <ul *ngIf="networkOpen">
+        <li (click)="toggleBCM()">
+            <i class="fas fa-folder" aria-hidden="true"></i> BCM
+            <i class="fas" [ngClass]="{'fa-angle-down': bcmOpen, 'fa-angle-right': !bcmOpen}"></i>
+            <ul *ngIf="bcmOpen">
+                <li (click)="selectSignalHandler('Signal1_BCM', $event)"><i class="fas fa-file-alt"></i> Signal1</li>
+                <li (click)="selectSignalHandler('Signal2_BCM', $event)"><i class="fas fa-file-alt"></i> Signal2</li>
+                <li (click)="selectSignalHandler('Signal3_BCM', $event)"><i class="fas fa-file-alt"></i> Signal3</li>
+                <li (click)="selectSignalHandler('Signal4_BCM', $event)"><i class="fas fa-file-alt"></i> Signal4</li>
+                <li (click)="selectSignalHandler('Signal5_BCM', $event)"><i class="fas fa-file-alt"></i> Signal5</li>
+            </ul>
+        </li>
+        <li (click)="toggleVBC()">
+            <i class="fas fa-folder" aria-hidden="true"></i> VBC
+            <i class="fas" [ngClass]="{'fa-angle-down': vbcOpen, 'fa-angle-right': !vbcOpen}"></i>
+            <ul *ngIf="vbcOpen">
+                <li (click)="selectSignalHandler('Signal1_VBC', $event)"><i class="fas fa-file-alt"></i> Signal1</li>
+                <li (click)="selectSignalHandler('Signal2_VBC', $event)"><i class="fas fa-file-alt"></i> Signal2</li>
+                <li (click)="selectSignalHandler('Signal3_VBC', $event)"><i class="fas fa-file-alt"></i> Signal3</li>
+                <li (click)="selectSignalHandler('Signal4_VBC', $event)"><i class="fas fa-file-alt"></i> Signal4</li>
+                <li (click)="selectSignalHandler('Signal5_VBC', $event)"><i class="fas fa-file-alt"></i> Signal5</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+
+<!-- <div class="sidebar">
+    <h3>Menu</h3>
+    <ul>
+        <li (click)="toggleDropdown()">Forms</li>
+        <ul *ngIf="isFormDropdownOpen">
+            <li (click)="showForm('formOne')">Form One</li>
+            <li (click)="showForm('formTwo')">Form Two</li>
+        </ul>
+    </ul>
+</div> -->
+
+
+<!-- <div class="sidebar">
+  <h3 (click)="toggleNetwork()">Network</h3>
+  <ul *ngIf="networkOpen">
+    <li (click)="toggleBCM()">
+      <i class="fas fa-folder" aria-hidden="true"></i> BCM
+      <i class="fas" [ngClass]="{'fa-angle-down': bcmOpen, 'fa-angle-right': !bcmOpen}"></i>
+      <ul *ngIf="bcmOpen">
+        <li (click)="selectSignalHandler('Signal1_BCM', $event)"><i class="fas fa-file-alt"></i> Signal1</li>
+        <li (click)="selectSignalHandler('Signal2_BCM', $event)"><i class="fas fa-file-alt"></i> Signal2</li>
+        <li (click)="selectSignalHandler('Signal3_BCM', $event)"><i class="fas fa-file-alt"></i> Signal3</li>
+        <li (click)="selectSignalHandler('Signal4_BCM', $event)"><i class="fas fa-file-alt"></i> Signal4</li>
+        <li (click)="selectSignalHandler('Signal5_BCM', $event)"><i class="fas fa-file-alt"></i> Signal5</li>
+      </ul>
+    </li>
+    <li (click)="toggleVBC()">
+      <i class="fas fa-folder" aria-hidden="true"></i> VBC
+      <i class="fas" [ngClass]="{'fa-angle-down': vbcOpen, 'fa-angle-right': !vbcOpen}"></i>
+      <ul *ngIf="vbcOpen">
+        <li (click)="selectSignalHandler('Signal1_VBC', $event)"><i class="fas fa-file-alt"></i> Signal1</li>
+        <li (click)="selectSignalHandler('Signal2_VBC', $event)"><i class="fas fa-file-alt"></i> Signal2</li>
+        <li (click)="selectSignalHandler('Signal3_VBC', $event)"><i class="fas fa-file-alt"></i> Signal3</li>
+        <li (click)="selectSignalHandler('Signal4_VBC', $event)"><i class="fas fa-file-alt"></i> Signal4</li>
+        <li (click)="selectSignalHandler('Signal5_VBC', $event)"><i class="fas fa-file-alt"></i> Signal5</li>
+      </ul>
+    </li>
+  </ul>
+</div> -->

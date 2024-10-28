@@ -1,0 +1,130 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    max-width: 600px;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.custom-form {
+    width: 100%;
+    transition: opacity 0.5s;
+}
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.button-group {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.cancel-button,
+.save-button,
+.edit-button,
+.configure-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.cancel-button, .edit-button {
+    background-color: #4a4e49;
+    color: white;
+}
+
+.save-button, .configure-button {
+    background-color: #2fe712;
+    color: white;
+    margin-left: 10px;
+}
+
+.fields-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.tx-fields,
+.rx-fields {
+    flex: 1;
+    margin: 0 10px;
+}
+
+.input-row {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.input-row input {
+    flex: 1;
+    width: 70px;
+    margin-right: 5px;
+}
+
+.input-row input:last-child {
+    margin-right: 0;
+}
+
+.form-group {
+    margin-top: 20px;
+}
+
+.disabled-button {
+    opacity: 0.5;
+    pointer-events: none;
+}

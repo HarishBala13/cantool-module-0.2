@@ -1,0 +1,164 @@
+<div class="overlay">
+    <div class="form-container">
+      <form class="custom-form">
+        <h4 class="form-title">Configuration</h4>
+        <div class="flex">
+            <div class="form-group">
+                <label for="txCount">Tx Count</label>
+                <input type="number" id="txCount" name="txCount" [(ngModel)]="txCount" (input)="updateTxFields()" required>
+              </div>
+        
+              <div class="form-group">
+                <label for="rxCount">Rx Count</label>
+                <input type="number" id="rxCount" name="rxCount" [(ngModel)]="rxCount" (input)="updateRxFields()" required>
+              </div>
+        </div>
+  
+        
+  
+        <div class="button-group">
+          <button type="button" class="cancel-button" (click)="cancel()">Cancel</button>
+          <button 
+                type="button" 
+                class="save-button" 
+                (click)="save()" 
+                [disabled]="saveButtonDisabled"
+                [ngClass]="{'disabled-button': saveButtonDisabled}">
+          Save
+        </button>
+        </div>
+  
+        <div *ngIf="showAdditionalFields" class="additional-fields">
+          <div class="fields-container">
+            <div class="tx-fields">
+              <h5>Tx Fields</h5>
+              <div *ngFor="let i of txFieldArray; let index = index" class="input-row">
+                <input type="text" placeholder="Message Name" [(ngModel)]="txFields[index].messageName">
+                <input type="text" placeholder="Start Bit" [(ngModel)]="txFields[index].startBit">
+                <input type="text" placeholder="Length" [(ngModel)]="txFields[index].length">
+              </div>
+            </div>
+  
+            <div class="rx-fields">
+              <h5>Rx Fields</h5>
+              <div *ngFor="let i of rxFieldArray; let index = index" class="input-row">
+                <input type="text" placeholder="Message Name" [(ngModel)]="rxFields[index].messageName">
+                <input type="text" placeholder="Start Bit" [(ngModel)]="rxFields[index].startBit">
+                <input type="text" placeholder="Length" [(ngModel)]="rxFields[index].length">
+              </div>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="bitrate">Bitrate</label>
+            <input type="text" id="bitrate" [(ngModel)]="bitrate">
+          </div>
+  
+          <div class="form-group">
+            <label for="channel">Channel</label>
+            <input type="text" id="channel" [(ngModel)]="channel">
+          </div>
+
+          <div class="button-group">
+            <button type="button" class="edit-button" (click)="edit()">Edit</button>
+          <button 
+                type="button" 
+                class="configure-button" 
+                (click)="configure()">
+          Configure
+        </button>
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+
+
+
+
+<!-- <div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form class="bg-light p-4 rounded shadow" style="opacity: 1; background: rgba(255, 255, 255, 0.5);">
+                <h4 class="text-center">Complex Form</h4>
+
+                <div class="form-group">
+                    <label for="txCount">Tx Count</label>
+                    <input type="number" class="form-control" id="txCount" name="txCount" [(ngModel)]="txCount"
+                        (input)="updateTxFields()" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="rxCount">Rx Count</label>
+                    <input type="number" class="form-control" id="rxCount" name="rxCount" [(ngModel)]="rxCount"
+                        (input)="updateRxFields()" required>
+                </div>
+
+                <div class="text-center mb-3">
+                    <button type="button" class="btn btn-danger" (click)="cancel()">Cancel</button>
+                    <button type="button" class="btn btn-primary ml-2" (click)="save()">Save</button>
+                </div>
+
+                <div *ngIf="showAdditionalFields" class="additional-fields"
+                    style="opacity: 0; filter: blur(10px); transition: opacity 0.5s, filter 0.5s;">
+
+                    <div class="row">
+                        <div class="col">
+                            <h5>Tx Fields</h5>
+                            <div *ngFor="let i of txFieldArray; let index = index">
+                                <div class="form-row mb-3">
+                                    <div class="form-group col">
+                                        <label>Message Name</label>
+                                        <input type="text" class="form-control"
+                                            [(ngModel)]="txFields[index].messageName">
+                                    </div>
+                                    <div class="form-group col">
+                                        <label>Start Bit</label>
+                                        <input type="text" class="form-control" [(ngModel)]="txFields[index].startBit">
+                                    </div>
+                                    <div class="form-group col">
+                                        <label>Length</label>
+                                        <input type="text" class="form-control" [(ngModel)]="txFields[index].length">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <h5>Rx Fields</h5>
+                            <div *ngFor="let i of rxFieldArray; let index = index">
+                                <div class="form-row mb-3">
+                                    <div class="form-group col">
+                                        <label>Message Name</label>
+                                        <input type="text" class="form-control"
+                                            [(ngModel)]="rxFields[index].messageName">
+                                    </div>
+                                    <div class="form-group col">
+                                        <label>Start Bit</label>
+                                        <input type="text" class="form-control" [(ngModel)]="rxFields[index].startBit">
+                                    </div>
+                                    <div class="form-group col">
+                                        <label>Length</label>
+                                        <input type="text" class="form-control" [(ngModel)]="rxFields[index].length">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-4">
+                        <label for="bitrate">Bitrate</label>
+                        <input type="text" class="form-control" id="bitrate" [(ngModel)]="bitrate">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="channel">Channel</label>
+                        <input type="text" class="form-control" id="channel" [(ngModel)]="channel">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> -->
