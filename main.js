@@ -1,11 +1,11 @@
 const { app, BrowserWindow, Menu, ipcMain, dialog } = require('electron');
 const fs = require('fs');
 const path = require('path');
-
 if (require('electron-squirrel-startup')) app.quit();
 
 let mainWindow;
 let logsWindow;
+let windows = [];
 const logMessages = [];
 let index = 0;
 
@@ -15,25 +15,20 @@ const mainMenuTemplate = [
         submenu: [
             {
                 label: 'Configure',
-                // click() {
-                //     dialog.showMessageBox(mainWindow, {
-                //         title: 'Form', message: 'Opened a form' // it's just opening a normal box
-                //     })
-                // }
                 click: () => {
-                    mainWindow.webContents.send('open-form');
+                    mainWindow.webContents.send('open-configure-file');
                 }
             },
             {
                 label: 'Save',
                 click() {
-                    console.log('File saved')
+                    console.log('File saved');
                 }
             },
             {
                 label: 'Close',
                 click() {
-                    console.log('File closed')
+                    console.log('File closed');
                 }
             },
         ]
@@ -44,19 +39,19 @@ const mainMenuTemplate = [
             {
                 label: 'Cut',
                 click() {
-                    console.log('text cutted')
+                    console.log('text cut');
                 }
             },
             {
                 label: 'Copy',
                 click() {
-                    console.log('text copied')
+                    console.log('text copied');
                 }
             },
             {
                 label: 'Paste',
                 click() {
-                    console.log('text pasted')
+                    console.log('text pasted');
                 }
             },
         ]
@@ -79,28 +74,27 @@ const mainMenuTemplate = [
         label: 'Open Logs',
         click: () => {
             createLogsWindow();
-            logsWindow.webContents.send('open-logs');
         }
     },
-    {
-        label: 'Reload',
-        accelerator: 'Cmd+Ctrl+R',
-        role: 'reload',
-        click: (menuItem, focusedWindow) => {
-            if (focusedWindow) {
-                focusedWindow.reload();
-            } else {
-                console.log("Reload is disabled in this state.");
-            }
-        }
-    }
+    // {
+    //     label: 'Reload',
+    //     accelerator: 'Cmd+Ctrl+R',
+    //     click: () => {
+    //         const focusedWindow = BrowserWindow.getFocusedWindow();
+    //         if (focusedWindow) {
+    //             focusedWindow.reload();
+    //         } else {
+    //             console.log("Reload is disabled in this state.");
+    //         }
+    //     }
+    // }
 ];
 
 const childMenuTemplate = [
     {
         label: 'Save',
         click() {
-            console.log('File saved')
+            console.log('File saved');
         }
     },
     {
@@ -118,25 +112,24 @@ const childMenuTemplate = [
             else app.quit();
         }
     },
-    {
-        label: 'Reload',
-        accelerator: 'Cmd+Ctrl+R',
-        role: 'reload',
-        click: (menuItem, focusedWindow) => {
-            if (focusedWindow) {
-                focusedWindow.reload();
-            } else {
-                console.log("Reload is disabled in this state.");
-            }
-        }
-    }
+    // {
+    //     label: 'Reload',
+    //     accelerator: 'CmdOrCtrl+R',
+    //     click: () => {
+    //         const focusedWindow = BrowserWindow.getFocusedWindow();
+    //         if (focusedWindow) {
+    //             focusedWindow.reload();
+    //         } else {
+    //             console.log("Reload is disabled in this state.");
+    //         }
+    //     }
+    // }
 ];
 
 function createWindow() {
     mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
-        fullscreen: true,
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: false,
@@ -144,11 +137,16 @@ function createWindow() {
         }
     });
 
-    // mainWindow.loadFile('dist/angular-app/browser/index.html');
-    mainWindow.loadURL('http://localhost:4200');
+    mainWindow.loadURL(path.join(__dirname, 'dist/angular-app/browser/index.html'));
+
+    windows.push(mainWindow);
 
     const menu = Menu.buildFromTemplate(mainMenuTemplate);
     Menu.setApplicationMenu(menu);
+
+    mainWindow.on('closed', () => {
+        windows = windows.filter(_window => _window != mainWindow);
+    });
 }
 
 function createLogsWindow() {
@@ -158,15 +156,12 @@ function createLogsWindow() {
         width: 1200,
         height: 200,
         parent: mainWindow,
+        title: 'Logs Window',
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: false,
             preload: path.join(__dirname, 'preload.js')
         }
-    });
-
-    logsWindow.on('closed', () => {
-        logsWindow = null;
     });
 
     const childMenu = Menu.buildFromTemplate(childMenuTemplate);
@@ -176,7 +171,17 @@ function createLogsWindow() {
         logsWindow.webContents.send('navigate-to-logs');
     });
 
-    logsWindow.loadURL('http://localhost:4200/logs');
+    windows.push(logsWindow);
+
+    if (process.env.NODE_ENV === 'development') {
+        logsWindow.loadURL('http://localhost:4200/logs');
+    } else {
+        logsWindow.loadURL(path.join(__dirname, 'dist/angular-app/browser/index.html'));
+    }
+
+    logsWindow.on('closed', () => {
+        windows = windows.filter(_window => _window != logsWindow);
+    });
 }
 
 function emitLog(message) {
@@ -200,30 +205,30 @@ ipcMain.on('clear-logs', () => {
     }
 });
 
-ipcMain.on('save-code', (event, code) => {
+ipcMain.on('save-code', (event, configureArray) => {
     const options = {
-        title: 'Save Code',
-        defaultPath: path.join(__dirname, 'code.c'),
+        title: 'Configure Code',
+        defaultPath: path.join(__dirname, `${configureArray[1]}`),
         buttonLabel: 'Save',
         filters: [
             { name: 'C Files', extensions: ['c'] },
         ],
+        message:'Create a C Configure file to communicate with your board'
     };
 
     dialog.showSaveDialog(null, options).then((file) => {
         if (!file.canceled) {
-            fs.writeFile(file.filePath.toString(), code, (err) => {
+            fs.writeFile(file.filePath.toString(), configureArray[0], (err) => {
                 if (err) {
                     emitLog(err.message.toString());
                 } else {
-                    const successMessage = `Log entry at ${new Date().toLocaleTimeString()} and ` + `File has been saved to ${file.filePath}`;
-                    emitLog(successMessage);
+                    const logMessage = `Log entry at ${new Date().toLocaleTimeString()} and ` + `File has been saved to ${file.filePath}`;
+                    emitLog(logMessage);
                 }
-                console.log(`File has been saved to your directory successfully`);
             });
         }
     }).catch(err => {
-        console.log(err);
+        emitLog(err);
     });
 });
 
@@ -241,7 +246,6 @@ ipcMain.on('clear-logs', () => {
     }
 });
 
-
 app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
@@ -256,9 +260,9 @@ app.on('activate', () => {
     }
 });
 
-// ipcMain.handle('dialog:openFile', async () => {
-//     const result = await dialog.showOpenDialog(mainWindow, {
-//         properties: ['openFile']
-//     });
-//     return result.filePaths;
-// });
+
+// click() {
+//     dialog.showMessageBox(mainWindow, {
+//         title: 'Form', message: 'Opened a form' // it's just opening a normal box
+//     })
+// }

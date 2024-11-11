@@ -14,13 +14,13 @@ export class ElectronService {
       console.warn('Electron\'s IPC was not loaded');
   }
 
-  send(channel: string, ...args: any[]): void {
+  send(channel: any, ...args: any[]): void {
     if (this.ipc) {
       this.ipc.send(channel, ...args);
     }
   }
 
-  on(channel: string, listener: (event: IpcRendererEvent, ...args: any[]) => void): void {
+  on(channel: any, listener: (event: IpcRendererEvent, ...args: any[]) => void): void {
     if (this.ipc) {
       this.ipc.on(channel, listener);
     }

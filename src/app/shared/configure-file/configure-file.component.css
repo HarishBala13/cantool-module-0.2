@@ -16,8 +16,11 @@ body {
     bottom: 0;
     background: rgba(0, 0, 0, 0.5);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    transition: opacity 0.5s;
+    overflow-y: auto;
 }
 
 .form-container {
@@ -36,8 +39,11 @@ body {
 .custom-form {
     width: 100%;
     transition: opacity 0.5s;
+    margin-top: 60px;
+    margin-bottom: 40px;
 }
-.flex {
+
+.count-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -74,23 +80,29 @@ body {
 .cancel-button,
 .save-button,
 .edit-button,
-.configure-button {
+.configure-button,
+.close-button {
     padding: 10px 15px;
     border: none;
     border-radius: 6px;
     cursor: pointer;
     font-size: 14px;
-}
-
-.cancel-button, .edit-button {
-    background-color: #4a4e49;
-    color: white;
-}
-
-.save-button, .configure-button {
-    background-color: #2fe712;
-    color: white;
     margin-left: 10px;
+    color: whitesmoke;
+}
+
+.edit-button,
+.cancel-button {
+    background-color: #4a4e49;
+}
+
+.close-button {
+    background-color: crimson;
+}
+
+.save-button,
+.configure-button {
+    background-color: #2fe712;
 }
 
 .fields-container {

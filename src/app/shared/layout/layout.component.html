@@ -3,10 +3,11 @@
         <app-sidebar />
         <div class="main-content">
             @if (isConfigureFileVisible) {
-            <app-configure-file />
+            <app-configure-file [isConfigureFileVisible]="isConfigureFileVisible"
+                (closeConfigureFile)="closeConfigurationFile()" />
             }
             <router-outlet />
         </div>
     </div>
-    <app-footer />
+    <app-footer/>
 </div>
